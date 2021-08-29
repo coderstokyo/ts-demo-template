@@ -1,15 +1,16 @@
-// Primitive types
+// interface
+interface Contact {
+  name: string;
+  phone: string;
+  email: string;
+}
 
-const myName: string = 'CodersX';
-const age: number = 3;
-const bigNum: bigint = BigInt(10);
-const isFree: boolean = true;
-const someVar: undefined = undefined;
-const anotherVar: null = null;
+const contacts: Contact[] = [];
 
-console.log(typeof myName);
-console.log(typeof age);
-console.log(typeof bigNum);
-console.log(typeof isFree);
-console.log(typeof someVar);
-console.log(typeof anotherVar);
+const newContact: Contact = {
+  name: 'Nguyen Van A',
+  phone: '0123123',
+  email: 'abc@gmail.com',
+};
+
+contacts.push(newContact);
