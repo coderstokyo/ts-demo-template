@@ -1,11 +1,14 @@
-// interface
-// optional properties
+// optional chaining
 import { send } from './mailer';
 
+interface Pet {
+  name: string;
+}
 interface Contact {
   name: string;
   phone: string;
   email?: string;
+  pet?: Pet;
 }
 
 const contacts: Contact[] = [];
@@ -14,6 +17,9 @@ const newContact: Contact = {
   name: 'Nguyen Van A',
   phone: '0123123',
   email: 'abc@gmail.com',
+  pet: {
+    name: 'A',
+  },
 };
 
 const otherContact: Contact = {
@@ -23,6 +29,9 @@ const otherContact: Contact = {
 
 contacts.push(newContact);
 
-if (newContact.email) {
-  send(newContact.email, '1', '2');
+function getPetName(contact: Contact): string {
+  return contact.pet?.name || '';
 }
+
+console.log(getPetName(newContact));
+console.log(getPetName(otherContact));
