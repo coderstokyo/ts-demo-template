@@ -4,11 +4,16 @@ import { send } from './mailer';
 interface Pet {
   name: string;
 }
+
+interface Address {
+  city: string;
+}
 interface Contact {
   name: string;
   phone: string;
   email?: string;
   pet?: Pet;
+  addresses?: Address[];
 }
 
 const contacts: Contact[] = [];
@@ -33,5 +38,11 @@ function getPetName(contact: Contact): string {
   return contact.pet?.name || '';
 }
 
+function getFirstAddress(contact: Contact) {
+  return contact.addresses?.[0];
+}
+
 console.log(getPetName(newContact));
 console.log(getPetName(otherContact));
+
+console.log(getFirstAddress(newContact)?.city);
