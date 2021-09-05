@@ -1,4 +1,5 @@
 // optional chaining
+// implement interface
 import { send } from './mailer';
 
 interface Pet {
@@ -18,6 +19,7 @@ interface Contact {
 
 const contacts: Contact[] = [];
 
+// object literal
 const newContact: Contact = {
   name: 'Nguyen Van A',
   phone: '0123123',
@@ -41,11 +43,6 @@ function getPetName(contact: Contact): string {
 function getFirstAddress(contact: Contact) {
   return contact.addresses?.[0];
 }
-
-console.log(getPetName(newContact));
-console.log(getPetName(otherContact));
-
-console.log(getFirstAddress(newContact)?.city);
 
 // extend interface
 interface Button {
@@ -71,3 +68,48 @@ const addToCartBtn: IconButton = {
   },
   icon: 'cart-icon',
 };
+
+class MyContact implements Contact {
+  name: string;
+  phone: string;
+
+  constructor(name: string, phone: string) {
+    this.name = name;
+    this.phone = phone;
+  }
+}
+
+const a = new MyContact('A', '123');
+console.log(a.name);
+
+interface ContactAdapter {
+  getData: () => Promise<Contact[]>;
+}
+
+class ContactApp {
+  adapter: ContactAdapter;
+  constructor(adapter: ContactAdapter) {
+    this.adapter = adapter;
+  }
+
+  async render() {
+    const contacts: Contact[] =
+      await this.adapter.getData();
+    console.table(contacts);
+  }
+}
+
+class MyContactAdapter implements ContactAdapter {
+  async getData() {
+    // TODO: get data from API
+    const contacts: Contact[] = [
+      { name: 'A', phone: '123' },
+      { name: 'B', phone: '456' },
+    ];
+    return contacts;
+  }
+}
+
+const adapter = new MyContactAdapter();
+const app = new ContactApp(adapter);
+app.render();
